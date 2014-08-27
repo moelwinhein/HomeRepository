@@ -34,7 +34,7 @@ import java.util.Scanner;
  * @author Dave Jun
  */
 public class CityConnect {
-
+	
 	/*
 	 * ==============NOTE TO STUDENTS======================================
 	 * These messages shown to the user are defined in one place for convenient
@@ -51,6 +51,12 @@ public class CityConnect {
 	private static final String WELCOME_MESSAGE = "Welcome to SimpleRouteStore!";
 	private static final String MESSAGE_NO_SPACE = "No more space to store locations";
 	private static final String MESSAGE_TO_ENTER_COMMAND = "Enter command:";
+	private static final String ERROR_NULL_ROUTE_ENDPOINTS = "Route end points cannot be null";
+	private static final String COMMAND_EXIT = "exit";
+	private static final String COMMAND_GETDISTANCE = "getdistance";
+	private static final String COMMAND_ADDROUTE = "addroute";
+	private static final String ERROR_NULL_COMMAND = "command type string cannot be null!";
+	private static final String ERROR_UNRECOGNIZED_COMMAND = "Unrecognized command type";
 
 	// These are the possible command types
 	enum COMMAND_TYPE {
@@ -140,7 +146,7 @@ public class CityConnect {
 				System.exit(0);
 			default:
 				//throw an error if the command is not recognized
-				throw new Error("Unrecognized command type");
+				throw new Error(ERROR_UNRECOGNIZED_COMMAND);
 			}
 		}
 		/*
@@ -174,13 +180,13 @@ public class CityConnect {
 	 */
 	private static COMMAND_TYPE determineCommandType(String commandTypeString) {
 		if (commandTypeString == null)
-			throw new Error("command type string cannot be null!");
+			throw new Error(ERROR_NULL_COMMAND);
 
-		if (commandTypeString.equalsIgnoreCase("addroute")) {
+		if (commandTypeString.equalsIgnoreCase(COMMAND_ADDROUTE)) {
 			return COMMAND_TYPE.ADD_ROUTE;
-		} else if (commandTypeString.equalsIgnoreCase("getdistance")) {
+		} else if (commandTypeString.equalsIgnoreCase(COMMAND_GETDISTANCE)) {
 			return COMMAND_TYPE.GET_DISTANCE;
-		} else if (commandTypeString.equalsIgnoreCase("exit")) {
+		} else if (commandTypeString.equalsIgnoreCase(COMMAND_EXIT)) {
 		 	return COMMAND_TYPE.EXIT;
 		} else {
 			return COMMAND_TYPE.INVALID;
@@ -316,7 +322,7 @@ public class CityConnect {
 
 		if ((startLocation1 == null) || (endLocation1 == null)
 				&& (startLocation2 == null) || (endLocation2 == null)){
-			throw new Error("Route end points cannot be null");
+			throw new Error(ERROR_NULL_ROUTE_ENDPOINTS);
 		}
 
 		return (startLocation1.equalsIgnoreCase(startLocation2) && endLocation1
