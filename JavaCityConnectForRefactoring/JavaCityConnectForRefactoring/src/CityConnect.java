@@ -121,25 +121,27 @@ public class CityConnect {
 	}
 
 	public static String executeCommand(String userCommand) {
-		if (userCommand.trim().equals(""))
+		if (isEmptyString(userCommand))
 			return String.format(MESSAGE_INVALID_FORMAT, userCommand);
+		
+		else {
+			String commandTypeString = getFirstWord(userCommand);
 
-		String commandTypeString = getFirstWord(userCommand);
+			COMMAND_TYPE commandType = determineCommandType(commandTypeString);
 
-		COMMAND_TYPE commandType = determineCommandType(commandTypeString);
-
-		switch (commandType) {
-		case ADD_ROUTE:
-			return addRoute(userCommand);
-		case GET_DISTANCE:
-			return getDistance(userCommand);
-		case INVALID:
-			return String.format(MESSAGE_INVALID_FORMAT, userCommand);
-		case EXIT:
-			System.exit(0);
-		default:
-			//throw an error if the command is not recognized
-			throw new Error("Unrecognized command type");
+			switch (commandType) {
+			case ADD_ROUTE:
+				return addRoute(userCommand);
+			case GET_DISTANCE:
+				return getDistance(userCommand);
+			case INVALID:
+				return String.format(MESSAGE_INVALID_FORMAT, userCommand);
+			case EXIT:
+				System.exit(0);
+			default:
+				//throw an error if the command is not recognized
+				throw new Error("Unrecognized command type");
+			}
 		}
 		/*
 		 * ==============NOTE TO STUDENTS======================================
@@ -157,6 +159,11 @@ public class CityConnect {
 	 * solves various sub-problems at lower levels of abstraction.
 	 * ====================================================================
 	 */
+	
+	// Check if the command is an empty string
+	public static boolean isEmptyString(String userCommand) {
+		return userCommand.trim().equals("");
+	}
 
 	/**
 	 * This operation determines which of the supported command types the user
